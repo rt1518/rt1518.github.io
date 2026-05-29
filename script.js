@@ -492,6 +492,302 @@ const setActiveButton = (buttons, activeButton) => {
   });
 };
 
+const playbookDownloads = {
+  readiness: {
+    fileName: "platform-readiness-checklist.md",
+    content: `# Platform Readiness Checklist
+
+Use this before a banking platform change moves toward production.
+
+## 1. Change Summary
+- Business goal:
+- Client or user journey impacted:
+- Platform/application:
+- Target release date:
+- Delivery owner:
+- Business owner:
+- Technology owner:
+- Operations/support owner:
+
+## 2. Impacted Systems
+| System | Role | Owner | Change Needed | Ready? |
+| --- | --- | --- | --- | --- |
+| Digital/channel |  |  |  |  |
+| Vendor/API/file |  |  |  |  |
+| Core/ledger |  |  |  |  |
+| Payment rail |  |  |  |  |
+| Reporting/reconciliation |  |  |  |  |
+| Monitoring/support |  |  |  |  |
+
+## 3. Readiness Checks
+- Requirements and scope are clear.
+- System of record is defined.
+- Data flow is documented.
+- Control points are documented.
+- Access/RBAC needs are approved.
+- Test scenarios cover normal and exception paths.
+- Lower environment validation is complete.
+- Production monitoring is identified.
+- Runbook and rollback path are ready.
+- Support owner and escalation path are confirmed.
+
+## 4. Go / No-Go
+| Gate | Owner | Evidence | Status |
+| --- | --- | --- | --- |
+| Product acceptance |  |  |  |
+| QA/UAT signoff |  |  |  |
+| Security/risk approval |  |  |  |
+| CAB/release approval |  |  |  |
+| Operations handoff |  |  |  |
+`
+  },
+  cutover: {
+    fileName: "migration-cutover-runbook.md",
+    content: `# Migration & Cutover Runbook
+
+Use this for platform migration, merger migration, vendor upgrade, or a major release.
+
+## 1. Cutover Summary
+- Program/change:
+- Cutover date/time:
+- Systems impacted:
+- Business impact:
+- Cutover lead:
+- Vendor lead:
+- Technology lead:
+- Business approver:
+
+## 2. Timeline
+| Time | Step | Owner | Validation | Status |
+| --- | --- | --- | --- | --- |
+| T-7 days | Final dependency review |  |  |  |
+| T-2 days | Freeze readiness check |  |  |  |
+| T-0 | Start cutover |  |  |  |
+| T+1 hour | Validate critical flows |  |  |  |
+| T+1 day | Post-cutover support review |  |  |  |
+
+## 3. Dependency Tracker
+| Dependency | Owner | Due Date | Risk | Status |
+| --- | --- | --- | --- | --- |
+| Vendor readiness |  |  |  |  |
+| Environment access |  |  |  |  |
+| Data/config migration |  |  |  |  |
+| Test evidence |  |  |  |  |
+| Support staffing |  |  |  |  |
+
+## 4. Rollback Plan
+- Rollback trigger:
+- Rollback decision owner:
+- Rollback steps:
+- Customer/business communication:
+- Post-rollback validation:
+
+## 5. Command Center
+- Bridge link:
+- Start/end time:
+- Decision log owner:
+- Status update cadence:
+- Escalation contact:
+`
+  },
+  escalation: {
+    fileName: "escalation-path-template.md",
+    content: `# Escalation Path Template
+
+Use this for incidents, defects, blockers, vendor delays, or production issues.
+
+## 1. Issue Summary
+- Issue:
+- Severity:
+- Client/business impact:
+- First detected:
+- Current owner:
+- Target resolution:
+
+## 2. Severity Guide
+| Severity | Meaning | Response Target | Communication |
+| --- | --- | --- | --- |
+| Sev 1 | Critical outage or payment/client impact | Immediate | Executive and command center |
+| Sev 2 | Major function impaired | Same day | Business and technology leads |
+| Sev 3 | Limited impact or workaround exists | Planned | Delivery/support owners |
+| Sev 4 | Question, enhancement, or minor defect | Backlog | Product owner |
+
+## 3. Escalation Paths
+| Area | Primary Owner | Backup Owner | When To Escalate |
+| --- | --- | --- | --- |
+| Business |  |  |  |
+| Product/TPM |  |  |  |
+| Engineering |  |  |  |
+| Vendor |  |  |  |
+| Operations/support |  |  |  |
+| Risk/compliance |  |  |  |
+
+## 4. Decision Log
+| Time | Decision | Owner | Reason |
+| --- | --- | --- | --- |
+|  |  |  |  |
+
+## 5. Closure Criteria
+- Root cause or probable cause documented.
+- Business impact confirmed.
+- Corrective action owner assigned.
+- Monitoring or control gap reviewed.
+- Stakeholders notified.
+`
+  },
+  vendor: {
+    fileName: "vendor-onboarding-checklist.md",
+    content: `# Vendor Onboarding Checklist
+
+Use this when adding or changing a vendor, API, file exchange, or platform integration.
+
+## 1. Vendor Summary
+- Vendor:
+- Product/service:
+- Business purpose:
+- Data shared:
+- Integration type:
+- Production target:
+- Vendor owner:
+- Bank/platform owner:
+
+## 2. Readiness Areas
+| Area | Questions | Owner | Status |
+| --- | --- | --- | --- |
+| Architecture | What systems connect? What is the data flow? |  |  |
+| Security | What access, encryption, and evidence are required? |  |  |
+| Environments | What lower environments are needed? |  |  |
+| RBAC | Who needs access and approval? |  |  |
+| SLA/support | What happens when the vendor service fails? |  |  |
+| Testing | What normal and exception paths must pass? |  |  |
+| Operations | Who owns monitoring, tickets, and escalation? |  |  |
+
+## 3. Integration Checks
+- API/file contract reviewed.
+- Error handling defined.
+- Retry and duplicate prevention defined.
+- Status messages documented.
+- Vendor support path confirmed.
+- DR/business continuity expectations reviewed.
+
+## 4. Production Handoff
+- Runbook:
+- Monitoring:
+- Support queue:
+- Escalation contact:
+- Known failure points:
+- Post-launch review date:
+`
+  },
+  payments: {
+    fileName: "payments-flow-checklist.md",
+    content: `# Payments Flow Checklist
+
+Use this for ACH, wire, RTP, FedNow-style, or commercial payment workflow readiness.
+
+## 1. Payment Flow
+- Payment type:
+- Initiation channel:
+- Debit account:
+- Credit/beneficiary path:
+- Rail/vendor:
+- Cutoff rules:
+- Settlement timing:
+- Client reporting:
+
+## 2. Flow Steps
+| Step | Owner | Key Questions | Ready? |
+| --- | --- | --- | --- |
+| Initiation |  | What data does the client provide? |  |
+| Entitlement/approval |  | Are roles, limits, and dual control defined? |  |
+| Validation |  | Are OFAC, fraud, account, and rail rules covered? |  |
+| Routing/transmission |  | Which rail, file, message, or API path is used? |  |
+| Settlement/posting |  | When does money move and when does core post? |  |
+| Exceptions |  | How are returns, repairs, rejects, and reversals handled? |  |
+| Reconciliation |  | Who matches platform, rail, core, GL, and reports? |  |
+
+## 3. Evidence Needed
+- Test cases for normal payments.
+- Test cases for rejected payments.
+- Test cases for returns/repairs.
+- Cutoff and holiday behavior.
+- Posting and GL behavior.
+- Client status/reporting behavior.
+- Support and escalation path.
+`
+  },
+  support: {
+    fileName: "production-support-runbook.md",
+    content: `# Production Support Runbook
+
+Use after launch to manage monitoring, incidents, RCA, vendor tickets, and improvements.
+
+## 1. Support Model
+- Platform/application:
+- Support hours:
+- Tier 1 owner:
+- Tier 2 owner:
+- Tier 3/platform owner:
+- Vendor support:
+- Business owner:
+
+## 2. Daily Health Checks
+| Check | Owner | Frequency | Evidence |
+| --- | --- | --- | --- |
+| Application availability |  |  |  |
+| Batch/file/API status |  |  |  |
+| Payment or transaction exceptions |  |  |  |
+| Reconciliation breaks |  |  |  |
+| Vendor open items |  |  |  |
+| Monitoring alerts |  |  |  |
+
+## 3. Incident Triage
+- What changed recently?
+- What client/business function is impacted?
+- Which systems show errors?
+- Is money movement, posting, or reporting affected?
+- Is there a workaround?
+- Who must be notified?
+
+## 4. RCA Summary
+- Incident:
+- Root cause:
+- Client/business impact:
+- Detection gap:
+- Control or monitoring gap:
+- Corrective action:
+- Owner:
+- Due date:
+
+## 5. Improvement Backlog
+| Improvement | Reason | Owner | Priority |
+| --- | --- | --- | --- |
+|  |  |  |  |
+`
+  }
+};
+
+const downloadPlaybook = (key) => {
+  const playbook = playbookDownloads[key];
+  if (!playbook) return;
+
+  const blob = new Blob([playbook.content], { type: "text/markdown" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = playbook.fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+};
+
+document.querySelectorAll("[data-playbook-download]").forEach((button) => {
+  button.addEventListener("click", () => {
+    downloadPlaybook(button.dataset.playbookDownload);
+  });
+});
+
 const flowTabs = document.querySelectorAll("[data-flow]");
 const flowDiagram = document.querySelector("[data-flow-diagram]");
 const flowPanel = document.querySelector("[data-flow-panel]");
