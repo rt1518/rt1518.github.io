@@ -767,15 +767,144 @@ Use after launch to manage monitoring, incidents, RCA, vendor tickets, and impro
   }
 };
 
+const csv = (rows) => rows.map((row) => row.map((value) => {
+  const text = String(value ?? "");
+  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}).join(",")).join("\n");
+
+const playbookCsvRows = {
+  readiness: [
+    ["Section", "Item", "Owner", "Status", "Evidence/Link", "Notes"],
+    ["Change Summary", "Business goal", "", "", "", ""],
+    ["Change Summary", "Client or user journey impacted", "", "", "", ""],
+    ["Change Summary", "Platform/application", "", "", "", ""],
+    ["Change Summary", "Target release date", "", "", "", ""],
+    ["Change Summary", "Delivery owner", "", "", "", ""],
+    ["Impacted Systems", "Digital/channel", "", "", "", "Role and change needed"],
+    ["Impacted Systems", "Vendor/API/file", "", "", "", "Role and change needed"],
+    ["Impacted Systems", "Core/ledger", "", "", "", "Role and change needed"],
+    ["Impacted Systems", "Payment rail", "", "", "", "Role and change needed"],
+    ["Impacted Systems", "Reporting/reconciliation", "", "", "", "Role and change needed"],
+    ["Readiness Checks", "Requirements and scope are clear", "", "", "", ""],
+    ["Readiness Checks", "System of record is defined", "", "", "", ""],
+    ["Readiness Checks", "Data flow is documented", "", "", "", ""],
+    ["Readiness Checks", "Control points are documented", "", "", "", ""],
+    ["Readiness Checks", "Access/RBAC needs are approved", "", "", "", ""],
+    ["Readiness Checks", "Normal and exception test scenarios are covered", "", "", "", ""],
+    ["Readiness Checks", "Monitoring and support owner are confirmed", "", "", "", ""],
+    ["Go/No-Go", "Product acceptance", "", "", "", ""],
+    ["Go/No-Go", "QA/UAT signoff", "", "", "", ""],
+    ["Go/No-Go", "CAB/release approval", "", "", "", ""],
+    ["Go/No-Go", "Operations handoff", "", "", "", ""]
+  ],
+  cutover: [
+    ["Phase", "Time", "Step", "Owner", "Validation", "Status", "Notes"],
+    ["Summary", "", "Program/change", "", "", "", ""],
+    ["Summary", "", "Cutover date/time", "", "", "", ""],
+    ["Summary", "", "Systems impacted", "", "", "", ""],
+    ["Summary", "", "Business impact", "", "", "", ""],
+    ["Pre-Cutover", "T-7 days", "Final dependency review", "", "", "", ""],
+    ["Pre-Cutover", "T-2 days", "Freeze readiness check", "", "", "", ""],
+    ["Cutover", "T-0", "Start cutover", "", "", "", ""],
+    ["Cutover", "T+1 hour", "Validate critical flows", "", "", "", ""],
+    ["Post-Cutover", "T+1 day", "Post-cutover support review", "", "", "", ""],
+    ["Dependency", "", "Vendor readiness", "", "", "", ""],
+    ["Dependency", "", "Environment access", "", "", "", ""],
+    ["Dependency", "", "Data/config migration", "", "", "", ""],
+    ["Dependency", "", "Test evidence", "", "", "", ""],
+    ["Rollback", "", "Rollback trigger", "", "", "", ""],
+    ["Rollback", "", "Rollback decision owner", "", "", "", ""],
+    ["Command Center", "", "Bridge link and status cadence", "", "", "", ""],
+    ["Command Center", "", "Decision log owner", "", "", "", ""]
+  ],
+  escalation: [
+    ["Area", "Item", "Primary Owner", "Backup Owner", "Trigger/Target", "Status", "Notes"],
+    ["Issue Summary", "Issue", "", "", "", "", ""],
+    ["Issue Summary", "Severity", "", "", "", "", ""],
+    ["Issue Summary", "Client/business impact", "", "", "", "", ""],
+    ["Severity Guide", "Sev 1", "", "", "Critical outage or payment/client impact; immediate response", "", ""],
+    ["Severity Guide", "Sev 2", "", "", "Major function impaired; same-day response", "", ""],
+    ["Severity Guide", "Sev 3", "", "", "Limited impact or workaround exists", "", ""],
+    ["Escalation Path", "Business", "", "", "Escalate for client impact or business decision", "", ""],
+    ["Escalation Path", "Product/TPM", "", "", "Escalate for scope, priority, or delivery decision", "", ""],
+    ["Escalation Path", "Engineering", "", "", "Escalate for defect, deployment, or technical fix", "", ""],
+    ["Escalation Path", "Vendor", "", "", "Escalate for vendor platform or SLA issue", "", ""],
+    ["Escalation Path", "Operations/support", "", "", "Escalate for incident triage or client support", "", ""],
+    ["Closure", "Root cause documented", "", "", "", "", ""],
+    ["Closure", "Corrective action assigned", "", "", "", "", ""],
+    ["Closure", "Monitoring/control gap reviewed", "", "", "", "", ""]
+  ],
+  vendor: [
+    ["Section", "Item", "Owner", "Status", "Evidence/Link", "Notes"],
+    ["Vendor Summary", "Vendor name", "", "", "", ""],
+    ["Vendor Summary", "Product/service", "", "", "", ""],
+    ["Vendor Summary", "Business purpose", "", "", "", ""],
+    ["Vendor Summary", "Data shared", "", "", "", ""],
+    ["Vendor Summary", "Integration type", "", "", "", "API, file, SSO, webhook, batch"],
+    ["Readiness", "Architecture review", "", "", "", "What systems connect?"],
+    ["Readiness", "Security review", "", "", "", "Access, encryption, evidence"],
+    ["Readiness", "Lower environments", "", "", "", "Dev, QA, UAT, test data"],
+    ["Readiness", "RBAC/access model", "", "", "", "Users, roles, approvals"],
+    ["Readiness", "SLA/support model", "", "", "", "What happens when service fails?"],
+    ["Integration", "API/file contract reviewed", "", "", "", ""],
+    ["Integration", "Error handling defined", "", "", "", ""],
+    ["Integration", "Retry and duplicate prevention defined", "", "", "", ""],
+    ["Integration", "Status messages documented", "", "", "", ""],
+    ["Production Handoff", "Runbook", "", "", "", ""],
+    ["Production Handoff", "Monitoring", "", "", "", ""],
+    ["Production Handoff", "Escalation contact", "", "", "", ""]
+  ],
+  payments: [
+    ["Step", "Key Question", "Owner", "Status", "Evidence/Link", "Notes"],
+    ["Payment Setup", "Payment type", "", "", "", "ACH, wire, RTP, FedNow-style"],
+    ["Payment Setup", "Initiation channel", "", "", "", "Commercial online, file, API, branch, ops"],
+    ["Payment Setup", "Debit account and beneficiary path", "", "", "", ""],
+    ["Payment Setup", "Cutoff and holiday rules", "", "", "", ""],
+    ["Initiation", "What data does the client provide?", "", "", "", ""],
+    ["Entitlement/Approval", "Are roles, limits, templates, and dual control defined?", "", "", "", ""],
+    ["Validation", "Are OFAC, fraud, account, and rail rules covered?", "", "", "", ""],
+    ["Routing/Transmission", "Which rail, file, message, or API path is used?", "", "", "", ""],
+    ["Settlement/Posting", "When does money move and when does core post?", "", "", "", ""],
+    ["Exceptions", "How are returns, repairs, rejects, and reversals handled?", "", "", "", ""],
+    ["Reconciliation", "Who matches platform, rail, core, GL, and reports?", "", "", "", ""],
+    ["Evidence", "Normal payment test cases", "", "", "", ""],
+    ["Evidence", "Rejected/returned payment test cases", "", "", "", ""],
+    ["Evidence", "Client status/reporting behavior", "", "", "", ""],
+    ["Evidence", "Support and escalation path", "", "", "", ""]
+  ],
+  support: [
+    ["Section", "Item", "Owner", "Frequency/Target", "Status", "Evidence/Link", "Notes"],
+    ["Support Model", "Platform/application", "", "", "", "", ""],
+    ["Support Model", "Support hours", "", "", "", "", ""],
+    ["Support Model", "Tier 1 owner", "", "", "", "", ""],
+    ["Support Model", "Tier 2 owner", "", "", "", "", ""],
+    ["Support Model", "Tier 3/platform owner", "", "", "", "", ""],
+    ["Support Model", "Vendor support", "", "", "", "", ""],
+    ["Daily Health Checks", "Application availability", "", "Daily", "", "", ""],
+    ["Daily Health Checks", "Batch/file/API status", "", "Daily", "", "", ""],
+    ["Daily Health Checks", "Payment or transaction exceptions", "", "Daily", "", "", ""],
+    ["Daily Health Checks", "Reconciliation breaks", "", "Daily", "", "", ""],
+    ["Incident Triage", "What changed recently?", "", "At incident start", "", "", ""],
+    ["Incident Triage", "Which systems show errors?", "", "At incident start", "", "", ""],
+    ["Incident Triage", "Is money movement, posting, or reporting affected?", "", "At incident start", "", "", ""],
+    ["RCA", "Root cause", "", "Post-incident", "", "", ""],
+    ["RCA", "Client/business impact", "", "Post-incident", "", "", ""],
+    ["RCA", "Corrective action", "", "Post-incident", "", "", ""],
+    ["Improvement Backlog", "Improvement item", "", "Backlog", "", "", ""]
+  ]
+};
+
 const downloadPlaybook = (key) => {
   const playbook = playbookDownloads[key];
-  if (!playbook) return;
+  const rows = playbookCsvRows[key];
+  if (!playbook || !rows) return;
 
-  const blob = new Blob([playbook.content], { type: "text/markdown" });
+  const fileName = playbook.fileName.replace(/\.md$/, ".csv");
+  const blob = new Blob([csv(rows)], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = playbook.fileName;
+  link.download = fileName;
   document.body.appendChild(link);
   link.click();
   link.remove();

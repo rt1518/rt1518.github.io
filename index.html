@@ -15,6 +15,7 @@
       </a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="#what-i-do">What I Do</a>
+        <a href="#lifecycle">Lifecycle</a>
         <a href="#banking-flows">Platform Map</a>
         <a href="#playbooks">Playbooks</a>
         <a href="#engagements">Services</a>
@@ -95,11 +96,72 @@
         </div>
       </section>
 
+      <section class="section lifecycle" id="lifecycle" aria-label="Platform delivery lifecycle">
+        <div class="section-heading narrow">
+          <p class="section-kicker">Delivery Lifecycle</p>
+          <h2>How I take banking platform work from idea to production support.</h2>
+          <p class="section-intro">This is the operating rhythm behind the work: clarify the change, align the platform path, prove it in lower environments, launch with control, and make sure support can own it after go-live.</p>
+        </div>
+        <div class="lifecycle-shell">
+          <div class="lifecycle-steps" aria-label="Lifecycle steps">
+            <button class="lifecycle-step is-active" type="button" data-lifecycle="discover" aria-current="true">
+              <span>01</span>
+              Discovery &amp; Scope
+            </button>
+            <button class="lifecycle-step" type="button" data-lifecycle="design">
+              <span>02</span>
+              Architecture &amp; Controls
+            </button>
+            <button class="lifecycle-step" type="button" data-lifecycle="onboard">
+              <span>03</span>
+              Vendor &amp; Environment Readiness
+            </button>
+            <button class="lifecycle-step" type="button" data-lifecycle="validate">
+              <span>04</span>
+              QA, UAT &amp; Stability
+            </button>
+            <button class="lifecycle-step" type="button" data-lifecycle="launch">
+              <span>05</span>
+              Cutover &amp; Release
+            </button>
+            <button class="lifecycle-step" type="button" data-lifecycle="operate">
+              <span>06</span>
+              Operate &amp; Improve
+            </button>
+          </div>
+          <article class="lifecycle-panel" data-lifecycle-panel aria-live="polite">
+            <p class="panel-kicker">Discovery &amp; Scope</p>
+            <h3>Turn ambiguity into a delivery-ready platform backlog.</h3>
+            <p>Clarify business outcomes, impacted systems, user journeys, vendors, controls, system-of-record questions, and dependencies. Translate the work into epics, features, stories, acceptance criteria, and PI objectives.</p>
+            <div class="panel-lists">
+              <div>
+                <strong>Key work</strong>
+                <ul>
+                  <li>Product discovery and scope definition</li>
+                  <li>Dependency and stakeholder mapping</li>
+                  <li>Risk, control, and platform impact analysis</li>
+                  <li>System-of-record and operating model gap scan</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Outputs</strong>
+                <ul>
+                  <li>Delivery roadmap</li>
+                  <li>Prioritized backlog</li>
+                  <li>Acceptance criteria</li>
+                  <li>Platform gap map</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section class="section banking-flows" id="banking-flows" aria-label="Banking platform flows">
         <div class="section-heading narrow">
           <p class="section-kicker">Platform Map</p>
           <h2>How a client action becomes a reliable banking outcome.</h2>
-          <p class="section-intro">A simple banking experience depends on a chain of controls, integrations, core behavior, money movement, reconciliation, and support. Pick a domain to see the flow.</p>
+          <p class="section-intro">After the delivery lifecycle is clear, the platform map shows where the work lands across the bank ecosystem: client action, controls, vendors, core, payment rails, reconciliation, and support.</p>
         </div>
         <div class="flow-explainer" aria-label="End-to-end banking platform chain">
           <article>
@@ -162,7 +224,7 @@
               <li>Control, data flow, testing, and release gates</li>
               <li>Monitoring, support owner, and go/no-go check</li>
             </ul>
-            <button type="button" data-playbook-download="readiness">Download Template</button>
+            <button type="button" data-playbook-download="readiness">Download CSV</button>
           </article>
           <article class="playbook-card">
             <span>02</span>
@@ -173,7 +235,7 @@
               <li>Owners, vendor contacts, and dependencies</li>
               <li>Rollback, command center, and post-cutover support</li>
             </ul>
-            <button type="button" data-playbook-download="cutover">Download Template</button>
+            <button type="button" data-playbook-download="cutover">Download CSV</button>
           </article>
           <article class="playbook-card">
             <span>03</span>
@@ -184,7 +246,7 @@
               <li>Business, technology, vendor, and support owners</li>
               <li>Communication cadence and closure criteria</li>
             </ul>
-            <button type="button" data-playbook-download="escalation">Download Template</button>
+            <button type="button" data-playbook-download="escalation">Download CSV</button>
           </article>
           <article class="playbook-card">
             <span>04</span>
@@ -195,7 +257,7 @@
               <li>RBAC, SLA, support, and testing readiness</li>
               <li>Production ownership and operational handoff</li>
             </ul>
-            <button type="button" data-playbook-download="vendor">Download Template</button>
+            <button type="button" data-playbook-download="vendor">Download CSV</button>
           </article>
           <article class="playbook-card">
             <span>05</span>
@@ -206,7 +268,7 @@
               <li>Posting, settlement, returns, and exceptions</li>
               <li>Reconciliation owner and client reporting</li>
             </ul>
-            <button type="button" data-playbook-download="payments">Download Template</button>
+            <button type="button" data-playbook-download="payments">Download CSV</button>
           </article>
           <article class="playbook-card">
             <span>06</span>
@@ -217,7 +279,7 @@
               <li>Incident triage, vendor tickets, and RCA</li>
               <li>Improvement backlog and support handoff</li>
             </ul>
-            <button type="button" data-playbook-download="support">Download Template</button>
+            <button type="button" data-playbook-download="support">Download CSV</button>
           </article>
         </div>
       </section>
